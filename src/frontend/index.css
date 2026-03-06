@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* Medical teal-forward palette */
+    --background: 0.98 0.004 200;
+    --foreground: 0.18 0.03 230;
+
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.03 230;
+
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.03 230;
+
+    /* Primary: rich teal */
+    --primary: 0.48 0.13 195;
+    --primary-foreground: 1 0 0;
+
+    /* Secondary: soft teal tint */
+    --secondary: 0.93 0.025 195;
+    --secondary-foreground: 0.36 0.09 200;
+
+    --muted: 0.95 0.008 200;
+    --muted-foreground: 0.52 0.03 215;
+
+    /* Accent: clear teal highlight */
+    --accent: 0.91 0.04 190;
+    --accent-foreground: 0.32 0.10 195;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.88 0.015 205;
+    --input: 0.9 0.012 205;
+    --ring: 0.48 0.13 195;
+
+    /* Chat bubbles */
+    --user-bubble: 0.48 0.13 195;
+    --user-bubble-fg: 1 0 0;
+    --assistant-bubble: 1 0 0;
+    --assistant-bubble-fg: 0.18 0.03 230;
+
+    /* Chart colors */
+    --chart-1: 0.48 0.13 195;
+    --chart-2: 0.60 0.12 165;
+    --chart-3: 0.40 0.09 230;
+    --chart-4: 0.65 0.16 150;
+    --chart-5: 0.72 0.10 210;
+
+    /* Sidebar */
+    --sidebar: 0.96 0.012 200;
+    --sidebar-foreground: 0.18 0.03 230;
+    --sidebar-primary: 0.48 0.13 195;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.91 0.04 190;
+    --sidebar-accent-foreground: 0.32 0.10 195;
+    --sidebar-border: 0.88 0.015 205;
+    --sidebar-ring: 0.48 0.13 195;
+
+    /* Header gradient stops */
+    --header-from: 0.32 0.12 205;
+    --header-to: 0.44 0.10 185;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .chat-gradient-bg {
+    background-color: oklch(var(--background));
+    background-image:
+      url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 2h4v10h10v4H18v10h-4V16H4v-4h10z' fill='%23007090' fill-opacity='0.025'/%3E%3C/svg%3E"),
+      linear-gradient(180deg, oklch(var(--background)) 0%, oklch(0.96 0.012 200) 100%);
+  }
+
+  .header-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--header-from)) 0%,
+      oklch(var(--header-to)) 100%
+    );
+  }
+
+  .user-bubble {
+    background: oklch(var(--user-bubble));
+    color: oklch(var(--user-bubble-fg));
+  }
+
+  .user-bubble-gradient {
+    background: linear-gradient(135deg, oklch(var(--user-bubble)) 0%, oklch(0.42 0.14 205) 100%);
+    color: oklch(var(--user-bubble-fg));
+  }
+
+  .assistant-bubble {
+    background: oklch(var(--assistant-bubble));
+    color: oklch(var(--assistant-bubble-fg));
+    box-shadow: 0 2px 8px 0 rgba(0, 60, 80, 0.10), 0 0 0 1px oklch(var(--border));
+    border-left: 2px solid oklch(var(--primary) / 0.4);
+  }
+
+  .typing-dot {
+    @apply w-2 h-2 rounded-full bg-primary;
+    animation: typingBounce 1.2s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes typingBounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.msg-animate {
+  animation: fadeSlideUp 0.25s ease-out forwards;
+}
